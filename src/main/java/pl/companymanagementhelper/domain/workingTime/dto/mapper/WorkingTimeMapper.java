@@ -1,8 +1,8 @@
-package pl.companymanagementhelper.definition.workingTime.dto.mapper;
+package pl.companymanagementhelper.domain.workingTime.dto.mapper;
 
 
-import pl.companymanagementhelper.definition.workingTime.WorkingTime;
-import pl.companymanagementhelper.definition.workingTime.dto.WorkingTimeDto;
+import pl.companymanagementhelper.domain.workingTime.WorkingTime;
+import pl.companymanagementhelper.domain.workingTime.dto.WorkingTimeDto;
 
 public class WorkingTimeMapper {
   public static WorkingTimeDto getDtoFromEntity(WorkingTime entity) {

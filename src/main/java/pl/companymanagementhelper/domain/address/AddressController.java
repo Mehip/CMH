@@ -1,4 +1,4 @@
-package pl.companymanagementhelper.definition.address;
+package pl.companymanagementhelper.domain.address;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -6,15 +6,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.companymanagementhelper.utils.HeaderUtil;
-import pl.companymanagementhelper.utils.ResponseUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 @Tag(name = "Address controller")
 @RestController
@@ -23,7 +23,6 @@ import java.util.Optional;
 @Slf4j
 public class AddressController {
   private final AddressRepository addressRepository;
-  private final AddressService addressService;
 
   @Value("${pl.cmh.app-name}")
   private String applicationName;
@@ -38,11 +37,13 @@ public class AddressController {
 
   @Operation(summary = "Get address by id")
   @GetMapping("/address/{id}")
-  public ResponseEntity<Address> getAddressById(
+  public ResponseEntity getAddressById(
       @Parameter(required = true, description = "Address id - It's a value by which an address is identified in a computer system") @PathVariable Long id) {
     log.debug("REST request to get Address : {}", id);
-    Optional<Address> address = addressRepository.findById(id);
-    return ResponseUtil.wrapOrNotFound(address);
+    return addressRepository.findById(id).map((response) -> ResponseEntity.ok()
+        .headers((HttpHeaders)null)
+        .body(response))
+        .orElse(new ResponseEntity(HttpStatus.NOT_FOUND));
   }
 
   @Operation(summary = "Create new address")

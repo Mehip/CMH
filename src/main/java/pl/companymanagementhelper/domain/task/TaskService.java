@@ -1,10 +1,10 @@
-package pl.companymanagementhelper.definition.task;
+package pl.companymanagementhelper.domain.task;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.companymanagementhelper.definition.task.dto.TaskDto;
-import pl.companymanagementhelper.definition.task.dto.mapper.TaskMapper;
-import pl.companymanagementhelper.definition.user.UserRepository;
+import pl.companymanagementhelper.domain.task.dto.TaskDto;
+import pl.companymanagementhelper.domain.task.dto.mapper.TaskMapper;
+import pl.companymanagementhelper.domain.user.UserRepository;
 
 import java.util.List;
 import java.util.Optional;

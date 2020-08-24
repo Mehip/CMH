@@ -1,4 +1,4 @@
-package pl.companymanagementhelper.definition.task;
+package pl.companymanagementhelper.domain.task;
 
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -7,16 +7,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.companymanagementhelper.definition.task.dto.TaskDto;
+import pl.companymanagementhelper.domain.task.dto.TaskDto;
 import pl.companymanagementhelper.utils.HeaderUtil;
-import pl.companymanagementhelper.utils.ResponseUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 @Tag(name = "Task controller")
 @RestController
@@ -40,11 +40,13 @@ public class TaskController {
 
   @Operation(summary = "Get task by id")
   @GetMapping("/tasks/{id}")
-  public ResponseEntity<TaskDto> getTaskById(
+  public ResponseEntity getTaskById(
       @Parameter(required = true, description = "Task id - It's a value by which a task is identified in a computer system") @PathVariable Long id) {
     log.debug("REST request to get Task: {}", id);
-    Optional<TaskDto> taskDto = taskService.getTaskDto(id);
-    return ResponseUtil.wrapOrNotFound(taskDto);
+    return taskService.getTaskDto(id).map((response) -> ResponseEntity.ok()
+        .headers((HttpHeaders)null)
+        .body(response))
+        .orElse(new ResponseEntity(HttpStatus.NOT_FOUND));
   }
 
   @Operation(summary = "Create new task")

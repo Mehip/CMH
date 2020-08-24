@@ -1,4 +1,4 @@
-package pl.companymanagementhelper.definition.user;
+package pl.companymanagementhelper.domain.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

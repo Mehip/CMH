@@ -1,10 +1,7 @@
-package pl.companymanagementhelper.definition.task;
+package pl.companymanagementhelper.domain.task;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import pl.companymanagementhelper.definition.user.User;
+import lombok.*;
+import pl.companymanagementhelper.domain.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

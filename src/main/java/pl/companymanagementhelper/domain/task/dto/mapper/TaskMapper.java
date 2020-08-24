@@ -1,7 +1,7 @@
-package pl.companymanagementhelper.definition.task.dto.mapper;
+package pl.companymanagementhelper.domain.task.dto.mapper;
 
-import pl.companymanagementhelper.definition.task.Task;
-import pl.companymanagementhelper.definition.task.dto.TaskDto;
+import pl.companymanagementhelper.domain.task.Task;
+import pl.companymanagementhelper.domain.task.dto.TaskDto;
 
 public class TaskMapper {
   public static TaskDto getDtoFromEntity(Task entity) {

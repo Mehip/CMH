@@ -1,4 +1,4 @@
-package pl.companymanagementhelper.definition.task.dto;
+package pl.companymanagementhelper.domain.task.dto;
 
 import lombok.Builder;
 import lombok.Getter;

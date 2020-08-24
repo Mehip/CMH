@@ -1,10 +1,7 @@
-package pl.companymanagementhelper.definition.workingTime;
+package pl.companymanagementhelper.domain.workingTime;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import pl.companymanagementhelper.definition.user.User;
+import lombok.*;
+import pl.companymanagementhelper.domain.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

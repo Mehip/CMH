@@ -1,4 +1,4 @@
-package pl.companymanagementhelper.definition.address;
+package pl.companymanagementhelper.domain.address;
 
 import lombok.*;
 

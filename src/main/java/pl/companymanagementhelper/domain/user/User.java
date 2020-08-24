@@ -1,17 +1,14 @@
-package pl.companymanagementhelper.definition.user;
+package pl.companymanagementhelper.domain.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import pl.companymanagementhelper.definition.address.Address;
-import pl.companymanagementhelper.definition.task.Task;
-import pl.companymanagementhelper.definition.workingTime.WorkingTime;
-import pl.companymanagementhelper.enums.UserRole;
+import pl.companymanagementhelper.domain.address.Address;
+import pl.companymanagementhelper.config.UserRole;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "t_users")

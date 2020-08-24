@@ -1,4 +1,4 @@
-package pl.companymanagementhelper.definition.workingTime.dto;
+package pl.companymanagementhelper.domain.workingTime.dto;
 
 import lombok.Builder;
 import lombok.Getter;

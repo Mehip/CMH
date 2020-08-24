@@ -1,4 +1,4 @@
-package pl.companymanagementhelper.definition.user;
+package pl.companymanagementhelper.domain.user;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -6,15 +6,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.companymanagementhelper.utils.HeaderUtil;
-import pl.companymanagementhelper.utils.ResponseUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 @Tag(name = "User controller")
 @RestController
@@ -23,7 +23,6 @@ import java.util.Optional;
 @Slf4j
 public class UserController {
   private final UserRepository userRepository;
-  private final UserService userService;
 
   @Value("${pl.cmh.app-name}")
   private String applicationName;
@@ -38,12 +37,15 @@ public class UserController {
 
   @Operation(summary = "Get user by id")
   @GetMapping("/users/{id}")
-  public ResponseEntity<User> getUserById(
+  public ResponseEntity getUserById(
       @Parameter(required = true, description = "User id - It's a value by which a user is identified in a computer system") @PathVariable Long id) {
     log.debug("REST request to get User : {}", id);
-    Optional<User> user = userRepository.findById(id);
-    return ResponseUtil.wrapOrNotFound(user);
+    return userRepository.findById(id).map((response) -> ResponseEntity.ok()
+        .headers((HttpHeaders) null)
+        .body(response))
+        .orElse(new ResponseEntity(HttpStatus.NOT_FOUND));
   }
+
 
   @Operation(summary = "Create new user")
   @PostMapping("/users")
@@ -59,7 +61,7 @@ public class UserController {
   @Operation(summary = "Update user")
   @PutMapping("/users")
   public ResponseEntity<User> updateUser(
-      @Parameter(required = true, description = "User - It's an object which represent information about user in a computer system")@RequestBody User user) {
+      @Parameter(required = true, description = "User - It's an object which represent information about user in a computer system") @RequestBody User user) {
     log.debug("REST request to update User : {}", user);
     User result = userRepository.save(user);
     return ResponseEntity.ok()

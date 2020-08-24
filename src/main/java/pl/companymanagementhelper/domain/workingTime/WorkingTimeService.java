@@ -1,10 +1,10 @@
-package pl.companymanagementhelper.definition.workingTime;
+package pl.companymanagementhelper.domain.workingTime;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.companymanagementhelper.definition.user.UserRepository;
-import pl.companymanagementhelper.definition.workingTime.dto.WorkingTimeDto;
-import pl.companymanagementhelper.definition.workingTime.dto.mapper.WorkingTimeMapper;
+import pl.companymanagementhelper.domain.user.UserRepository;
+import pl.companymanagementhelper.domain.workingTime.dto.WorkingTimeDto;
+import pl.companymanagementhelper.domain.workingTime.dto.mapper.WorkingTimeMapper;
 
 import java.util.List;
 import java.util.Optional;
