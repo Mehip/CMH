@@ -3,6 +3,7 @@ package pl.companymanagementhelper.definition.workingTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pl.companymanagementhelper.definition.user.User;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "t_working_times")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkingTime {

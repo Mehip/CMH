@@ -1,10 +1,14 @@
 package pl.companymanagementhelper.definition.workingTime;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.companymanagementhelper.definition.workingTime.dto.WorkingTimeDto;
 import pl.companymanagementhelper.utils.HeaderUtil;
 import pl.companymanagementhelper.utils.ResponseUtil;
 
@@ -13,51 +17,63 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+@Tag(name = "Working time controller")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 @Slf4j
 public class WorkingTimeController {
   private final WorkingTimeRepository workingTimeRepository;
-  private final WorkingTimeController workingTimeController;
+  private final WorkingTimeService workingTimeService;
 
   @Value("${pl.cmh.app-name}")
   private String applicationName;
   private static final String ENTITY_NAME = "working_time";
 
+  @Operation(summary = "Get list of all working times")
   @GetMapping("/working-time")
-  public List<WorkingTime> getAllWorkingTimes() {
+  public List<WorkingTimeDto> getAllWorkingTimes() {
     log.debug("REST request to get all Working Times");
-    return workingTimeRepository.findAll();
+    return workingTimeService.getAllWorkingTimeDtos();
   }
 
+  @Operation(summary = "Get working time by id")
   @GetMapping("/working-time/{id}")
-  public ResponseEntity<WorkingTime> getWorkingTimeById(@PathVariable Long id) {
+  public ResponseEntity<WorkingTimeDto> getWorkingTimeById(
+      @Parameter(required = true, description = "Working Time id - It's a value by which a work time is identified in a computer system") @PathVariable Long id) {
     log.debug("REST request to get Working Time : {}", id);
-    Optional<WorkingTime> workingTime = workingTimeRepository.findById(id);
-    return ResponseUtil.wrapOrNotFound(workingTime);
+    Optional<WorkingTimeDto> workingTimeDto = workingTimeService.getWorkingTimeDto(id);
+    return ResponseUtil.wrapOrNotFound(workingTimeDto);
   }
 
+  @Operation(summary = "Create new working time")
   @PostMapping("/working-time")
-  public ResponseEntity<WorkingTime> createWorkingTime(@RequestBody WorkingTime workingTime) throws URISyntaxException {
-    log.debug("REST request to save Working Time {}", workingTime);
-    WorkingTime result = workingTimeRepository.save(workingTime);
+  public ResponseEntity<WorkingTimeDto> createWorkingTime(
+      @Parameter(required = true, description = "Working time - It's an object which represent information about work time in a computer system") @RequestBody WorkingTimeDto workingTimeDto) throws URISyntaxException {
+    log.debug("REST request to save Working Time {}", workingTimeDto);
+    WorkingTime workingTime = workingTimeService.saveWorkingTimeDto(workingTimeDto);
+    WorkingTimeDto result = workingTimeService.getWorkingTimeDto(workingTime).get();
     return ResponseEntity.created(new URI("/api/working-time/" + result.getId()))
         .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
         .body(result);
   }
 
+  @Operation(summary = "Update working time")
   @PutMapping("/working-time")
-  public ResponseEntity<WorkingTime> updateWorkingTime(@RequestBody WorkingTime workingTime) {
-    log.debug("REST request to update Working Time : {}", workingTime);
-    WorkingTime result = workingTimeRepository.save(workingTime);
+  public ResponseEntity<WorkingTimeDto> updateWorkingTime(
+      @Parameter(required = true, description = "Working time - It's an object which represent information about work time in a computer system") @RequestBody WorkingTimeDto workingTimeDto) {
+    log.debug("REST request to update Working Time : {}", workingTimeDto);
+    WorkingTime workingTime = workingTimeService.saveWorkingTimeDto(workingTimeDto);
+    WorkingTimeDto result = workingTimeService.getWorkingTimeDto(workingTime).get();
     return ResponseEntity.ok()
         .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
         .body(result);
   }
 
+  @Operation(summary = "Delete working time by id")
   @DeleteMapping("/working-time/{id}")
-  public ResponseEntity<Void> deleteWorkingTimeById(@PathVariable Long id) {
+  public ResponseEntity<Void> deleteWorkingTimeById(
+      @Parameter(required = true, description = "Working Time id - It's a value by which a work time is identified in a computer system") @PathVariable Long id) {
     log.debug("REST request to delete Working Time : {}", id);
     workingTimeRepository.deleteById(id);
     return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
