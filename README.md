@@ -1,6 +1,11 @@
 # Company Management Helper in Spring
 
-Backend application
+Its the app for company owners to manage their employees.
+It enables us to check informations about empolees if they are currently in the company and if they fulfilling their job.
+Its a perfect app to control your company even from the other side of the world.
+
+## Technology stack:
+Java, Spring, Maven, Hibernate, JUnit, Docker
 
 # How to run application
 1
