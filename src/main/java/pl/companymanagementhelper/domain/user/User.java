@@ -3,12 +3,12 @@ package pl.companymanagementhelper.domain.user;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import pl.companymanagementhelper.domain.address.Address;
 import pl.companymanagementhelper.config.UserRole;
+import pl.companymanagementhelper.domain.address.Address;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "t_users")
@@ -28,7 +28,7 @@ public class User {
   private String surname;
 
   @Column(name = "date_of_birth")
-  private Date dateOfBirth;
+  private LocalDate dateOfBirth;
 
   @Column(name = "Salary")
   private BigDecimal salary;
